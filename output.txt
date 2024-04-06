@@ -1,0 +1,57 @@
+Before standardization:
+C:\Python311\Lib\site-packages\sklearn\metrics\_scorer.py:548: FutureWarning: The `needs_threshold` and `needs_proba` parameter are deprecated in version 1.4 and will be removed in 1.6. You can either let `response_method` be `None` or set it to `predict` to preserve the same behaviour.
+  warnings.warn(
+Model: Naive Bayes
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9947
+------------------------------
+Model: Support Vector Machine
+  Accuracy: 0.9667
+  F1 Score (Weighted): 0.9667
+  ROC AUC (OvR): 0.9974
+------------------------------
+Model: Random Forest
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9954
+------------------------------
+Model: XGBoost
+  Accuracy: 0.9467
+  F1 Score (Weighted): 0.9462
+  ROC AUC (OvR): 0.9746
+------------------------------
+Model: K-Nearest Neighbors
+  Accuracy: 0.9733
+  F1 Score (Weighted): 0.9731
+  ROC AUC (OvR): 0.9896
+------------------------------
+
+After standardization:
+C:\Python311\Lib\site-packages\sklearn\metrics\_scorer.py:548: FutureWarning: The `needs_threshold` and `needs_proba` parameter are deprecated in version 1.4 and will be removed in 1.6. You can either let `response_method` be `None` or set it to `predict` to preserve the same behaviour.
+  warnings.warn(
+Model: Naive Bayes
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9947
+------------------------------
+Model: Support Vector Machine
+  Accuracy: 0.9667
+  F1 Score (Weighted): 0.9666
+  ROC AUC (OvR): 0.9981
+------------------------------
+Model: Random Forest
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9924
+------------------------------
+Model: XGBoost
+  Accuracy: 0.9467
+  F1 Score (Weighted): 0.9462
+  ROC AUC (OvR): 0.9746
+------------------------------
+Model: K-Nearest Neighbors
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9598
+  ROC AUC (OvR): 0.9964
+------------------------------

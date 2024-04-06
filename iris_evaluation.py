@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.model_selection import cross_validate, KFold
 from sklearn.metrics import make_scorer, accuracy_score, f1_score, roc_auc_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
@@ -12,13 +14,13 @@ import xgboost as xgb
 iris = load_iris()
 X, y = iris.data, iris.target
 
-# Define models to evaluate
+# Define models to evaluate, wrapped in pipelines for preprocessing
 models = {
-    "Naive Bayes": GaussianNB(),
-    "Support Vector Machine": SVC(probability=True),  # Enable probability for ROC AUC
+    "Naive Bayes": Pipeline([('scaler', StandardScaler()), ('classifier', GaussianNB())]),
+    "Support Vector Machine": Pipeline([('scaler', StandardScaler()), ('classifier', SVC(probability=True))]),  # Enable probability for ROC AUC
     "Random Forest": RandomForestClassifier(),
     "XGBoost": xgb.XGBClassifier(use_label_encoder=False, eval_metric='logloss'),
-    "K-Nearest Neighbors": KNeighborsClassifier()
+    "K-Nearest Neighbors": Pipeline([('scaler', StandardScaler()), ('classifier', KNeighborsClassifier())])
 }
 
 # Define 5-fold cross-validation
@@ -33,8 +35,8 @@ scoring = {
 
 # Run cross-validation and collect results
 results = {}
-for name, model in models.items():
-    cv_results = cross_validate(model, X, y, cv=cv, scoring=scoring)
+for name, pipeline in models.items():
+    cv_results = cross_validate(pipeline, X, y, cv=cv, scoring=scoring)
     results[name] = {
         'Accuracy': np.mean(cv_results['test_accuracy']),
         'F1 Score (Weighted)': np.mean(cv_results['test_f1_weighted']),
