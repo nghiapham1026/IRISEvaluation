@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.datasets import load_iris
-from sklearn.model_selection import cross_validate, KFold
+from sklearn.model_selection import cross_validate, KFold, GridSearchCV
 from sklearn.metrics import make_scorer, accuracy_score, f1_score, roc_auc_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -14,15 +14,6 @@ import xgboost as xgb
 iris = load_iris()
 X, y = iris.data, iris.target
 
-# Define models to evaluate, wrapped in pipelines for preprocessing
-models = {
-    "Naive Bayes": Pipeline([('scaler', StandardScaler()), ('classifier', GaussianNB())]),
-    "Support Vector Machine": Pipeline([('scaler', StandardScaler()), ('classifier', SVC(probability=True))]),  # Enable probability for ROC AUC
-    "Random Forest": RandomForestClassifier(),
-    "XGBoost": xgb.XGBClassifier(use_label_encoder=False, eval_metric='logloss'),
-    "K-Nearest Neighbors": Pipeline([('scaler', StandardScaler()), ('classifier', KNeighborsClassifier())])
-}
-
 # Define 5-fold cross-validation
 cv = KFold(n_splits=5, shuffle=True, random_state=42)
 
@@ -33,10 +24,38 @@ scoring = {
     'roc_auc_ovr': make_scorer(roc_auc_score, needs_proba=True, average='macro', multi_class='ovr')
 }
 
-# Run cross-validation and collect results
+# Hyperparameters to tune
+param_grid = {
+    "Support Vector Machine": {
+        'classifier__C': [0.1, 1, 10, 100], 
+        'classifier__gamma': [1, 0.1, 0.01, 0.001]
+    },
+    "K-Nearest Neighbors": {
+        'classifier__n_neighbors': [3, 5, 7, 9],
+        'classifier__weights': ['uniform', 'distance']
+    }
+}
+
+# Define models to evaluate, wrapped in pipelines for preprocessing
+models = {
+    "Naive Bayes": Pipeline([('scaler', StandardScaler()), ('classifier', GaussianNB())]),
+    "Support Vector Machine": Pipeline([('scaler', StandardScaler()), ('classifier', SVC(probability=True))]),  # Enable probability for ROC AUC
+    "Random Forest": RandomForestClassifier(),
+    "XGBoost": xgb.XGBClassifier(use_label_encoder=False, eval_metric='logloss'),
+    "K-Nearest Neighbors": Pipeline([('scaler', StandardScaler()), ('classifier', KNeighborsClassifier())])
+}
+
+# Run hyperparameter tuning and cross-validation, and collect results
 results = {}
 for name, pipeline in models.items():
-    cv_results = cross_validate(pipeline, X, y, cv=cv, scoring=scoring)
+    if name in param_grid:
+        grid_search = GridSearchCV(pipeline, param_grid[name], cv=cv, scoring='accuracy', refit=True)
+        grid_search.fit(X, y)
+        best_model = grid_search.best_estimator_
+        cv_results = cross_validate(best_model, X, y, cv=cv, scoring=scoring)
+    else:
+        cv_results = cross_validate(pipeline, X, y, cv=cv, scoring=scoring)
+    
     results[name] = {
         'Accuracy': np.mean(cv_results['test_accuracy']),
         'F1 Score (Weighted)': np.mean(cv_results['test_f1_weighted']),
