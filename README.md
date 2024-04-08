@@ -1,4 +1,4 @@
-# IRISEvaluation - Programming Assignment #2
+# Nathan Pham - Programming Assignment #2
 
 This project evaluates multiple machine learning models on the Iris dataset. `iris_evaluation.py` includes preprocessing with standardization, hyperparameter tuning for select models, and cross-validation. `iris_evaluation_normalization.py` is similar to `iris_evaluation.py`, only difference is that `iris_evaluation_normalization.py` preprocesses the data using normalization instead of standardization.
 
