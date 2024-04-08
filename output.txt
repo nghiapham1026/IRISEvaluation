@@ -1,0 +1,80 @@
+Before standardization:
+Model: Naive Bayes
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9947
+------------------------------
+Model: Support Vector Machine
+  Accuracy: 0.9667
+  F1 Score (Weighted): 0.9667
+  ROC AUC (OvR): 0.9974
+------------------------------
+Model: Random Forest
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9954
+------------------------------
+Model: XGBoost
+  Accuracy: 0.9467
+  F1 Score (Weighted): 0.9462
+  ROC AUC (OvR): 0.9746
+------------------------------
+Model: K-Nearest Neighbors
+  Accuracy: 0.9733
+  F1 Score (Weighted): 0.9731
+  ROC AUC (OvR): 0.9896
+------------------------------
+
+After standardization:
+Model: Naive Bayes
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9947
+------------------------------
+Model: Support Vector Machine
+  Accuracy: 0.9667
+  F1 Score (Weighted): 0.9666
+  ROC AUC (OvR): 0.9981
+------------------------------
+Model: Random Forest
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9924
+------------------------------
+Model: XGBoost
+  Accuracy: 0.9467
+  F1 Score (Weighted): 0.9462
+  ROC AUC (OvR): 0.9746
+------------------------------
+Model: K-Nearest Neighbors
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9598
+  ROC AUC (OvR): 0.9964
+------------------------------
+
+After hyperparameter tuning:
+Model: Naive Bayes
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9947
+------------------------------
+Model: Support Vector Machine
+  Accuracy: 0.9733
+  F1 Score (Weighted): 0.9731
+  ROC AUC (OvR): 0.9987
+------------------------------
+Model: Random Forest
+  Accuracy: 0.9600
+  F1 Score (Weighted): 0.9599
+  ROC AUC (OvR): 0.9950
+------------------------------
+Model: XGBoost
+  Accuracy: 0.9467
+  F1 Score (Weighted): 0.9462
+  ROC AUC (OvR): 0.9746
+------------------------------
+Model: K-Nearest Neighbors
+  Accuracy: 0.9667
+  F1 Score (Weighted): 0.9664
+  ROC AUC (OvR): 0.9954
+------------------------------
